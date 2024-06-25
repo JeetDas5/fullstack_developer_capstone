@@ -28,8 +28,8 @@ def get_request(endpoint, **kwargs):
         response = requests.get(request_url)
         return response.json()
     except:
-        # If any error occurs
         print("Network exception occurred")
+        # If any error occurs
 # Add code for get requests to back end
 
 # def analyze_review_sentiments(text):

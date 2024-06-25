@@ -53,7 +53,7 @@ def logout_request(request):
 
 @csrf_exempt
 def registration(request):
-    context = {}
+    # context = {}
 
     data = json.loads(request.body)
     username = data['userName']
@@ -62,20 +62,21 @@ def registration(request):
     last_name = data['lastName']
     email = data['email']
     username_exist = False
-    email_exist = False
+    # email_exist = False
     try:
         # Check if user already exists
         User.objects.get(username=username)
         username_exist = True
     except:
-        # If not, simply log this is a new user
         logger.debug("{} is new user".format(username))
+        # If not, simply log this is a new user
 
     # If it is a new user
     if not username_exist:
         # Create user in auth_user table
         user = User.objects.create_user(
-            username=username, first_name=first_name, last_name=last_name, password=password, email=email)
+            username=username, first_name=first_name,
+            last_name=last_name, password=password, email=email)
         # Login the user and redirect to list page
         login(request, user)
         data = {"userName": username, "status": "Authenticated"}
@@ -99,7 +100,8 @@ def get_cars(request):
                     "CarMake": car_model.car_make.name})
     return JsonResponse({"CarModels": cars})
 
-# Update the `get_dealerships` render list of dealerships all by default, particular state if state is passed
+# Update the `get_dealerships` render list of dealerships all by default,
+# particular state if state is passed
 
 
 def get_dealerships(request, state="All"):
@@ -148,7 +150,7 @@ def add_review(request):
     if (request.user.is_anonymous == False):
         data = json.loads(request.body)
         try:
-            response = post_review(data)
+            # response = post_review(data)
             return JsonResponse({"status": 200})
         except:
             return JsonResponse({"status": 401, "message": "Error in posting review"})
